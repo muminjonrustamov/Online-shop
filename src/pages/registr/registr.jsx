@@ -31,11 +31,13 @@ const navigate = useNavigate()
   }
   return (
     <div>
-      <div className="input-big">
+      <div className="inputs-big">
         <div className="input-img">
            <img src={RegistrImage} alt="" />
         </div>
-      <div className="input">
+      <div className="inputs">
+        <h1>Sign In</h1>
+        <hr />
         <form onSubmit={Form}>
           <input value={name} type="text" placeholder='name' onChange={(e) => setName(e.target.value)} />
           <input value={login} type="password" placeholder='password' onChange={(e) => setLogin(e.target.value)} />

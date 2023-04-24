@@ -1,42 +1,62 @@
-import React, {useState, useEffect} from 'react'
-import './home.scss'
-import Right from '../../images/3.png'
-import { useNavigate } from 'react-router-dom'
+import React, { useState, useEffect } from "react";
+import "./home.scss";
+import Right from "../../images/3.png";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
-
+import { motion, useScroll, useSpring } from "framer-motion";
 const Home = () => {
   const [data, setData] = useState([]);
-
   useEffect(() => {
     axios.get("https://fakestoreapi.com/products").then((res) => {
       return setData(res.data);
     });
   }, []);
-  const navigate = useNavigate()
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
+
+  const navigate = useNavigate();
   return (
-   <>
-    <div className='showcase'>  
-      <div className="showcase-content">
-        <div className="left">
-          <h1>Lorem, ipsum dolor.</h1>
-          <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.<br />
-             Magnam nesciunt harum itaque at, eum repudiandae numquam <br />
-             eveniet ipsam labore natus esse cupiditate ratione laboriosam? <br />
-            In iste qui placeat esse.</p>
+    <>
+      <motion.div
+        className="progress-bar"
+        style={{ scaleX, backgroundColor: "blue" }}
+      />
+      <div className="showcase">
+        <div className="showcase-content">
+          <div className="left">
+            <h1>Lorem, ipsum dolor.</h1>
+            <p>
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+              <br />
+              Magnam nesciunt harum itaque at, eum repudiandae numquam <br />
+              eveniet ipsam labore natus esse cupiditate ratione laboriosam?{" "}
+              <br />
+              In iste qui placeat esse.
+            </p>
             <div className="left-btn">
               <button onClick={() => navigate(`/product`)}>Buy Product</button>
             </div>
-        </div>
-        <div className="right">
-          <img src={Right} alt="" />
+          </div>
+          <div className="right">
+            <img src={Right} alt="" />
+          </div>
         </div>
       </div>
-    </div>
-    <div className="h1">
-      <h1>Our Products</h1>
-    </div>
-    <div className="cards">
+      <div className="h1">
+        <motion.div
+          animate={{
+            scale: [1, 2, 2, 1, 1],
+            rotate: [0, 0, 270, 270, 0],
+            borderRadius: ["20%", "20%", "50%", "50%", "20%"],
+          }}
+        />
+        <h1>Our Products</h1>
+      </div>
+      <div className="cards">
         {data.map((data, i) => (
           <div
             key={i}
@@ -67,8 +87,8 @@ const Home = () => {
           </div>
         ))}
       </div>
-   </>
-  )
-}
+    </>
+  );
+};
 
-export default Home
+export default Home;

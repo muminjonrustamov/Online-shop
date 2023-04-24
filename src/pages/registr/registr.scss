@@ -1,26 +1,33 @@
-.input-big{
+.inputs-big{
     background-color: rgb(96, 147, 250);
      display: flex;
      justify-content: space-between ;
      align-items: center;
      padding: 100px;
-     height: 88vh;
+     height: 100vh;
      img{
         border-radius: 20px;
+        width:700px;
      }
-    .input{
+    .inputs{
         background-color: #fff;
         padding: 20px;
         border-radius: 20px;
-        margin-right: 100px;
+        margin-right: 50px;
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column;
         gap: 30px;
         input{
-            width: 400px;
+            width: 500px;
             padding: 20px 30px;
+        }
+        hr{
+            width: 300px;
+            border: none;
+            background-color: #000;
+            height: 4px;
         }
         form{
             display: flex;

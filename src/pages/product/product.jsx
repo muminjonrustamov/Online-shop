@@ -3,6 +3,11 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./product.scss";
 
+import { motion, useScroll, useSpring } from "framer-motion";
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const Product = ({set, cart}) => {
   const [data, setData] = useState([]);
   const [filter, setFilter] = useState(data);
@@ -13,12 +18,13 @@ const Product = ({set, cart}) => {
       return setData(res.data);
     });
   }, []);
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
 
-  function setBu(p) {
-    let arr = [...cart, p]
-    set(arr)
-    console.log(cart);
-  }  
 
   console.log(data);
 
@@ -26,9 +32,40 @@ const Product = ({set, cart}) => {
     const updatedList = data?.filter((x) => x.category === cat);
     setFilter(updatedList);
   };
+
+  const notify = () => {
+    toast.success('Complete Buy!', {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      });
+  }
   
   return (
+  <>
+    <motion.div
+    className="progress-bar"
+    style={{ scaleX, backgroundColor: "blue" }}
+  />
     <div className="all">
+         <ToastContainer
+position="top-right"
+autoClose={5000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+theme="light"
+/>
+{/* Same as */}
       <div className="btn">
         <button onClick={() => filterProduct("women's clothing")}>
           Women's clothing
@@ -69,12 +106,15 @@ const Product = ({set, cart}) => {
                 <i className="fa-solid fa-star"></i>
                 <i className="fa-solid fa-star"></i>
               </div>
-              <button onClick={()=> setBu(data)}>Add to Cart</button>
+              <button onClick={notify}>Add to Cart</button>
+           
             </div>
           </div>
         ))}
       </div>
     </div>
+  
+  </>
   );
 };
 

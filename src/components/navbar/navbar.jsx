@@ -23,9 +23,6 @@ const Navbar = ({karzina}) => {
             <Link className='link2' to='/login'>Log In</Link>
         </li>
        </ul>
-       <div className="icon">
-    <i className="fa-solid fa-shopping-cart fa-2x"></i><Link className="title" to={"/cart"}>{karzina.length}</Link>
-   </div>
        <div className="btn">
         <button onClick={() => navigate(`/registr`)}>Sign In</button>
        </div>
